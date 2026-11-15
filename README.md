@@ -10,6 +10,19 @@ An AI-powered video analysis application that detects violent and non-violent ac
 
 ---
 
+### 🌐. Access the Deployed Application(LIVE LINK)
+
+After successful deployment, your services will have separate public URLs.
+
+**Frontend:**
+
+https://violence-detection-production-0620619d.up.railway.app/
+
+
+**Backend API Documentation:**
+
+https://violence-detection-production-7d8990d7.up.railway.app/docs
+
 ## 📌 Table of Contents
 
 - [Project Overview](#-project-overview)
@@ -345,22 +358,6 @@ You can also test the API using the interactive Swagger interface:
 
 ```text
 http://localhost:8000/docs
-```
-
-### 🌐. Access the Deployed Application
-
-After successful deployment, your services will have separate public URLs.
-
-**Frontend:**
-
-```text
-https://violence-detection-production-0620619d.up.railway.app/
-```
-
-**Backend API Documentation:**
-
-```text
-https://violence-detection-production-7d8990d7.up.railway.app/docs
 ```
 
 ## ⚠️ Limitations
