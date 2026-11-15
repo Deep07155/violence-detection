@@ -347,151 +347,21 @@ You can also test the API using the interactive Swagger interface:
 http://localhost:8000/docs
 ```
 
-## ☁️ Deployment on Railway
-
-This project uses two separate Railway services:
-
-1. **Backend Service:** FastAPI + TensorFlow + trained model.
-2. **Frontend Service:** Streamlit web application.
-
-Both services use the same GitHub repository but have separate build and start commands.
-
-### 1. Deploy the Backend
-
-Create a Railway project and deploy the GitHub repository:
-
-```text
-https://github.com/Deep07155/violence-detection
-```
-
-Configure the backend service:
-
-| Setting | Configuration |
-|---|---|
-| Root Directory | `/` |
-| Region | Southeast Asia (Singapore) |
-| Custom Build Command | `pip install -r requirements-backend.txt` |
-| Custom Start Command | `uvicorn backend.main:app --host 0.0.0.0 --port $PORT` |
-| Target Port | `8080` (based on the current deployment) |
-
-Generate a public domain for the backend.
-
-### 2. Configure Backend Variables
-
-Add the following environment variables to the backend service:
-
-```env
-MODEL_PATH=models/Real_Life_Violence_Detation_MoBiLSTM_model.h5
-MAX_UPLOAD_MB=200
-MAX_SEGMENTS=8
-```
-
-### 3. Deploy the Frontend
-
-Create a second service in the same Railway project using the same GitHub repository.
-
-Configure the frontend:
-
-| Setting | Configuration |
-|---|---|
-| Root Directory | `/` |
-| Region | Southeast Asia (Singapore) |
-| Custom Build Command | `pip install -r requirements-frontend.txt` |
-| Custom Start Command | `streamlit run frontend/app.py --server.address 0.0.0.0 --server.port $PORT` |
-| Target Port | `8080` (based on the current deployment) |
-
-Railway may assign a different port in another deployment. Use the port shown in the deployment logs when generating the service domain.
-
-### 4. Connect Frontend and Backend
-
-Open the frontend service's Variables tab.
-
-Add:
-
-```env
-API_URL=https://YOUR-BACKEND-DOMAIN
-```
-
-Replace the example with your actual backend public domain.
-
-Make sure the frontend reads this environment variable when sending prediction requests.
-
-### 5. Access the Deployed Application
+### 🌐. Access the Deployed Application
 
 After successful deployment, your services will have separate public URLs.
 
 **Frontend:**
 
 ```text
-https://YOUR-FRONTEND-DOMAIN
-```
-
-**Backend:**
-
-```text
-https://YOUR-BACKEND-DOMAIN
+https://violence-detection-production-0620619d.up.railway.app/
 ```
 
 **Backend API Documentation:**
 
 ```text
-https://YOUR-BACKEND-DOMAIN/docs
+https://violence-detection-production-7d8990d7.up.railway.app/docs
 ```
-
----
-
-## 🐛 Troubleshooting
-
-### 1. Model Loading Error
-
-If the model fails to load:
-
-- Verify the model file exists inside the `models/` directory.
-- Verify the `MODEL_PATH` environment variable.
-- Check TensorFlow compatibility with the version used during model training.
-- Review backend deployment logs.
-
-### 2. Video Upload Error
-
-If the video cannot be processed:
-
-- Check the supported video format.
-- Check the maximum upload size.
-- Try re-encoding the video using FFmpeg.
-
-Example:
-
-```bash
-ffmpeg -i input.mov -c:v libx264 output.mp4
-```
-
-### 3. Frontend Cannot Connect to Backend
-
-Verify that:
-
-- The backend service is running.
-- The backend public domain is correct.
-- The frontend `API_URL` variable contains the backend URL.
-- The frontend uses `API_URL` instead of a hardcoded localhost address.
-
-### 4. TensorFlow GPU Warning
-
-If deployment logs show that CUDA drivers are unavailable, TensorFlow may use CPU instead.
-
-GPU access is not required for the application to start, but CPU inference may be slower.
-
-### 5. Railway Out-of-Memory Error
-
-Video processing and TensorFlow inference can require significant memory.
-
-Possible solutions:
-
-- Use an appropriate memory allocation.
-- Reduce video processing workload.
-- Limit video upload size and duration.
-- Optimize frame extraction and model inference.
-
----
 
 ## ⚠️ Limitations
 
